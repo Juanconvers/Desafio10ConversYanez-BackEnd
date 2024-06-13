@@ -5,6 +5,8 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUiExpress from 'swagger-ui-express'
 import messageModel from './models/messages.js'
 import indexRouter from './routes/indexRouter.js'
 import initializePassport from './config/passport/passport.js'
@@ -13,14 +15,9 @@ import { Server } from 'socket.io'
 import { engine } from 'express-handlebars'
 import { __dirname } from './path.js'
 
-
-
-
 //Configuraciones o declaraciones
 const app = express()
 const PORT = 11000
-
-
 
 //Server
 const server = app.listen(PORT, () => {
@@ -35,9 +32,27 @@ mongoose.connect(varenv.mongo_url)
     .catch(e => console.log(e))
 
 
+const swaggerOptions = {
+    definition: {
+        openapi: '3.1.0',
+        info: {
+            title: 'Documentacion de la aplicacion',
+            description: 'Descripcion de documentacion'
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+}
+
+const specs = swaggerJsdoc(swaggerOptions)
+
+
+
 
 //Middlewares
 app.use(express.json()) 
+
+    //Documentación de la API
+app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 app.use(session({
     secret: varenv.session_secret,
