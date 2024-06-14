@@ -1,0 +1,79 @@
+paths:
+  /api/cart/:
+    get: # cartRouter.post('/', createCart)
+      summary: Crear un carrito de compras
+      tags: 
+        - cart
+      responses:
+        '200':
+          description: 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error al obtener usuarios
+    /api/cart/{id}:
+    get: # cartRouter.get('/:cid', getCart)
+      summary: Obtener todos los usuarios 
+      tags: 
+        - cart
+      responses:
+        '200':
+          description: 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error al obtener usuarios
+    /api/cart/{id}:
+    post: # cartRouter.post('/:cid/:pid', passport.authenticate('jwt', { session: false }), insertProductCart)
+      summary: 
+      tags:
+        - cart
+      parameters:
+        - name: body
+          in: body
+          required: true
+          chema:
+            type: object
+            properties:
+              first_name:
+                type: string
+              last_name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        '201':
+          description: 
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error al crear cliente
+    get: # cartRouter.get('/purchase/:cid', passport.authenticate('jwt', { session: false }), createTicket)
+      summary: 
+      tags: 
+        - cart
+      responses:
+        '200':
+          description: 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+        '500':
+          description: Error
+ 
