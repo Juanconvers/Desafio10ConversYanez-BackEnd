@@ -1,21 +1,21 @@
 paths:
   /api/products/:
-    get: # productsRouter.get('/', getProducts)
+    get:
       summary: Obtener todos los productos 
       tags: 
         - Product
       responses:
         '200':
-          description: Productos obtenidos correctamente
+          description: Productos consultados correctamente
           content:
             application/json:
               schema:
-                type: array
+                type: Array
                 items:
-                  $ref: '#/components/schemas/Products'
+                  $ref: '#/models/product'
         '500':
-          description: Error al obtener los productos
-    post: # productsRouter.post('/', passport.authenticate('jwt', { session: false}), createProduct)
+          description: Error al consultar los productos
+    post: 
       summary: Crear un nuevo producto
       tags:
         - Product
@@ -23,29 +23,47 @@ paths:
         - name: body
           in: body
           required: true
-          chema:
-            type: object
-            properties:
-              first_name:
-                type: string
-              last_name:
-                type: string
-              email:
-                type: string
-              password:
-                type: string
+            schema:
+              type: Array
+              properties:
+                product_Id:
+                  type: ObjectId
+                title:
+                  type: String
+                description:
+                  type: String
+                category:
+                  type: String
+                Quantity:
+                  type: Number
+                status:
+                  type: Boolean
+                stock:
+                  type: Number
+                code:
+                  type: String
+                price:
+                  type: Number
+                code:
+                  type: String
+                items:
+                  $ref: '#/models/product'
+                thumbnail:
+                  type: Default
       responses:
         '201':
           description: Producto creado correctamente
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Array
+                  items:
+                    $ref: '#/models/product'
+                
         '500':
           description: Error al crear el producto
   /api/products/{id}:
-    get: # productsRouter.get('/:pid', getProduct)
+    get:
      summary: Obtener un producto 
       tags: 
         - Product
@@ -55,27 +73,108 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Object
+                properties:
+                  product_Id:
+                    type: ObjectId
+                  title:
+                    type: String
+                  description:
+                    type: String
+                  category:
+                    type: String
+                  Quantity:
+                    type: Number
+                  status:
+                    type: Boolean
+                  stock:
+                    type: Number
+                  code:
+                    type: String
+                  price:
+                    type: Number
+                  code:
+                    type: String
+                  items:
+                    $ref: '#/models/cart'
+                  thumbnail:
+                    type: Default
+                  items:
+                    $ref: '#/models/product'
         '500':
           description: Error al obtener usuarios
-    put: # productsRouter.put('/:pid', passport.authenticate('jwt', { session: false}), updateProduct)
+    put: 
       summary: Actualizar un producto 
       tags: 
         - Product
+      parameters:
+        - name: body
+          in: body
+          required: true
+            schema:
+              type: Array
+              properties:
+                product_Id:
+                  type: ObjectId
+                title:
+                  type: String
+                description:
+                  type: String
+                category:
+                  type: String
+                Quantity:
+                  type: Number
+                status:
+                  type: Boolean
+                stock:
+                  type: Number
+                code:
+                  type: String
+                price:
+                  type: Number
+                code:
+                  type: String
+                items:
+                  $ref: '#/models/product'
+                thumbnail:
+                  type: Default
       responses:
         '200':
           description: Productos actualizado correctamente
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Object
+                  properties:
+                    product_Id:
+                      type: ObjectId
+                    title:
+                      type: String
+                    description:
+                      type: String
+                    category:
+                      type: String
+                    Quantity:
+                      type: Number
+                    status:
+                      type: Boolean
+                    stock:
+                      type: Number
+                    code:
+                      type: String
+                    price:
+                      type: Number
+                    code:
+                      type: String
+                    items:
+                      $ref: '#/models/cart'
+                    thumbnail:
+                      type: Default
+                    items:
+                      $ref: '#/models/product'
         '500':
           description: Error al actualizar el producto
-    delete: # productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false}), deleteProduct)
+    delete: 
       summary: Eliminar un producto 
       tags: 
         - Product

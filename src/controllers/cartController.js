@@ -106,7 +106,7 @@ export const insertProductCart = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send(`Error interno del servidor al crear producto: ${error}`)
+        res.status(500).send(`Error interno del servidor al insertar producto: ${error}`)
     }
 
 }

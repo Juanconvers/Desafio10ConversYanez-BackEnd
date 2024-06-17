@@ -1,56 +1,98 @@
 paths:
   /api/cart/:
-    get: # cartRouter.post('/', createCart)
+    get:
       summary: Crear un carrito de compras
       tags: 
         - cart
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              Product_id:
+                type: ObjectId
+              Quantity:
+                type: Number
       responses:
-        '202':
-          description: 
+        '201':
+          description: Carrito creado exitosamente.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Array
+                    items:
+                      $ref: '#/models/cart'
         '500':
           description: Error interno del servidor al crear carrito
     /api/cart/{id}:
-    get: # cartRouter.get('/:cid', getCart)
+    get:
       summary: Obtener todos los usuarios 
       tags: 
         - cart
       responses:
-        '200':
-          description: 
+        '200': 
+          description: Carrito consultado exitosamente.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Array
+                    items:
+                      $ref: '#/models/cart'
         '500':
-          description: Error al obtener usuarios
+          description: 'Error interno del servidor al consultar carrito'
     /api/cart/{id}:
-    get: # cartRouter.get('/purchase/:cid', passport.authenticate('jwt', { session: false }), createTicket)
-      summary: 
+    get: 
+      summary: Crear ticket de compra.
       tags: 
         - cart
         - product
         - ticket
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              code:
+                type: Sring
+              purchase_datetime:
+                type: Date
+              amount:
+                type: Number
+              purchaser:
+                type: String
+              products:
+                type: Array
       responses:
-        '200':
-          description: 
+        '200': 
+          description: 'Ticket creado exitosamente.' 
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Products'
+                type: Object
+                  properties:
+                    code:
+                      type: Sring
+                      description: Número del ticket
+                    purchase_datetime:
+                      type: Date
+                    amount:
+                      type: Number
+                    purchaser:
+                      type: String
+                    products:
+                      type: Array
+        '400':
+          description: Error porque no hay productos en el stock.
+        '404':
+          description: Error porque el carrito no existe.
         '500':
-          description: Error
-    post: # cartRouter.post('/:cid/:pid', passport.authenticate('jwt', { session: false }), insertProductCart)
-      summary: 
+          description: Error en el servidor por no poder creasr el ticket.
+    post: 
+      summary: Insertar productos en el carrito de compras.
       tags:
         - cart
         - product
@@ -61,26 +103,41 @@ paths:
           schema:
             type: object
             properties:
-              first_name:
-                type: string
-              last_name:
-                type: string
-              email:
-                type: string
-              password:
-                type: string
+               product_Id:
+                 type: ObjectId
+               title:
+                  type: String
+               description:
+                  type: String
+               category:
+                  type: String
+               quantity:
+                  type: Number
+               status:
+                  type: Boolean
+               stock:
+                  type: Number
+               code:
+                  type: String
+               price:
+                  type: Number
+               code:
+                  type: String
+                thumbnail:
+                  type: Default
       responses:
-        '201':
-          description: 
+        '200':
+          description: Producto insertado correctamente en el carrito.
           content:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Products'
+                  $ref: '#/models/cart'
+        '403':
+          description: Error porque el usuario no está autorizado para introducir productos en el carrito.
         '500':
-          description: Error al crear cliente
+          description: Error interno del servidor al insertar producto.
     
-     
   components:
     schemas:
       Cart:
