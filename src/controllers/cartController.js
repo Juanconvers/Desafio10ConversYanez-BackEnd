@@ -2,16 +2,6 @@ import cartModel from "../models/cart.js"
 import productModel from "../models/products.js"
 import ticketModel from "../models/ticket.js"
 
-export const getCart = async (req, res) => {
-    try {
-        const cartId = req.params.cid
-        const cart = await cartModel.findOne({ _id: cartId })
-        res.status(200).send(cart)
-    } catch (error) {
-        res.status(500).send(`Error interno del servidor al consultar carrito: ${error}`)
-    }
-}
-
 export const createCart = async (req, res) => {
     try {
         const mensaje = await cartModel.create({ products: [] })
@@ -20,6 +10,16 @@ export const createCart = async (req, res) => {
         res.status(500).send(`Error interno del servidor al crear carrito: ${error}`)
     }
 
+}
+
+export const getCart = async (req, res) => {
+    try {
+        const cartId = req.params.cid
+        const cart = await cartModel.findOne({ _id: cartId })
+        res.status(200).send(cart)
+    } catch (error) {
+        res.status(500).send(`Error interno del servidor al consultar carrito: ${error}`)
+    }
 }
 
 export const createTicket = async (req, res) => {

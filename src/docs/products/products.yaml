@@ -3,7 +3,7 @@ paths:
     get: # productsRouter.get('/', getProducts)
       summary: Obtener todos los productos 
       tags: 
-        - Products
+        - Product
       responses:
         '200':
           description: Productos obtenidos correctamente
@@ -18,7 +18,7 @@ paths:
     post: # productsRouter.post('/', passport.authenticate('jwt', { session: false}), createProduct)
       summary: Crear un nuevo producto
       tags:
-        - Products
+        - Product
       parameters:
         - name: body
           in: body
@@ -48,7 +48,7 @@ paths:
     get: # productsRouter.get('/:pid', getProduct)
      summary: Obtener un producto 
       tags: 
-        - Products
+        - Product
       responses:
         '200':
           description: Producto obtenido correctamente
@@ -63,7 +63,7 @@ paths:
     put: # productsRouter.put('/:pid', passport.authenticate('jwt', { session: false}), updateProduct)
       summary: Actualizar un producto 
       tags: 
-        - Products
+        - Product
       responses:
         '200':
           description: Productos actualizado correctamente
@@ -78,7 +78,7 @@ paths:
     delete: # productsRouter.delete('/:pid', passport.authenticate('jwt', { session: false}), deleteProduct)
       summary: Eliminar un producto 
       tags: 
-        - Products
+        - Product
       responses:
         '200':
           description: Producto eliminado correctamente
@@ -91,7 +91,48 @@ paths:
         '500':
           description: Error al eliminar el producto
 
-
+components:
+    schemas:
+     Product:
+        type: object
+        properties:
+          product_Id:
+            type: ObjectId
+            description: Id autogerado por MongoDB
+          title:
+            type: String
+            description: Nombre del producto
+          description:
+            type: String
+            description: Descripción del producto
+          category:
+            type: String
+            description: categoría del producto
+          status:
+            type: Boolean
+            description: Estado del producto
+          stock:
+            type: Number
+            description: Cantidad de producto en stock
+          code:
+            type: String
+            description: Código de producto en BD
+          price:
+            type: Number
+            description: Precio comercial de producto
+          thumbnail:
+            type: Default
+            description: Imagen de producto
+        example:
+          Product_id: ObjectId('1321ewew22')
+          Title: Lentejas
+          description: Sabrosas y baratas
+          category: Comida
+          status: 'True'
+          stock: '25'
+          code: 'ltn45d'
+          price: '15000'
+          thumbnail: 'http://leguminosa/lenteja?:mvn100'
 
         
 
